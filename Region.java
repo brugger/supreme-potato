@@ -41,6 +41,14 @@ public class Region implements Comparable<Region> {
 	return -1;
     }
 
+    public boolean equalsIgnoreCase( String region) {
+	return this.toString().equalsIgnoreCase( region );
+    }
+
+    public boolean equalsChrom( String chrom) {
+	return this.chrom.equalsIgnoreCase( chrom);
+    }
+
     
     @Override
     public String toString() {
