@@ -1,22 +1,47 @@
 import java.util.*;
 
+
+import java.io.*;
+import java.util.regex.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 
 public class jbtool {  
     
 
-
-
-    
-
-    
     public static void main( String[] args ) {
 
+	Regions regions = new Regions();
 
-	Bed_reader bed = new Bed_reader("refseq_nirvana_203.bed");
+	regions.readin_bedfile("refseq_nirvana_203.bed");
+
+	regions.sort();
 	
+	System.out.println( regions.get(100));
+	System.out.println( regions.get(101));
+
+	System.out.println( regions.length(100));
+
+	regions.chromosomes();
 	
+	//System.out.println("Nr of regions: " + regions.size());
+	//regions.merge_overlapping(500000);
+	System.out.println("Nr of regions: " + regions.size());
+
+	//Region r = new Region( "chr1", 1234, 34543);
+	
+	//System.out.println("Chr compare:: " + r.compare_chroms("1", "11"));
+	//System.out.println("Chr compare:: " + r.compare_chroms("X", "1"));
+
+
+	
+    }
+				      
+    
+    public static void main_old( String[] args ) {
 	
 	Region[] regions = new Region[3];
 
@@ -35,7 +60,6 @@ public class jbtool {
 	region2.end = 10000;
 
 	Arrays.sort(regions);
-
 
 	region_list.add( regions[0] );
 	region_list.add( regions[1] );
@@ -58,12 +82,11 @@ public class jbtool {
 	//	List region_chr1s =
 	System.out.println( "------------------" );
 
-
 	ArrayList<Region> chr1_regions = region_list.stream()
 	                                       .filter( s -> "chr1".equals(s.chrom))
 	                                       .collect(Collectors.toCollection(ArrayList::new));
 	//.collect( Collectors.toList());
-
+ 
 	
 	// forEach, can, mutate each object, map transforms object to new type
 	region_list.stream().filter( s -> "chr3".equals(s.chrom))
@@ -83,20 +106,13 @@ public class jbtool {
 	
 	//String chr1_regions = region_list.stream().filter( s -> "chr1".equals(s.chrom)).collect(Collectors.toList());
 
-
 	System.out.println( "------------------" );
 	System.out.println( String.format("Nr of hits: %d", chr1_regions.size()));
-
 	
 	for ( Region r: chr1_regions ) {
 	    System.out.println( r );
 	}
 	
-
-	
 	//System.out.println(chr1s);
-
-	
-     
     }
 }
